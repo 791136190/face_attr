@@ -1,0 +1,49 @@
+
+# Train and Val data list
+train: dataset/face_attr_train.txt
+val: dataset/face_attr_val.txt
+
+# Class Names
+# names: [score,  gender,   age,    land,                                                                     glass,   smile,   hat,   mask]
+names: ['score', 'gender', 'age',  'lex', 'ley', 'rex', 'rey', 'nosex', 'nosey', 'lmx', 'lmy', 'rmx', 'rmy', 'glass', 'smile', 'hat', 'mask']
+
+# Backbone
+backbone: 'FaceAttr'
+width_multiple: 1.0  # layer channel multiple
+image_size: 64
+
+# Epochs
+total_epochs: 300 # total epochs 500
+warmup_epochs: 5  # warmup epochs
+batch_size: 512   # batch size no accumulate
+workers: 8        # num thread for data load
+
+# Hyperparameters
+optimizer: 'sgd'        # optimizer sgd or adam
+scheduler: 'one_cycle'  # scheduler linear_lr or one_cycle or multi_step
+lr_base: 0.01           # initial learning rate (SGD=1E-2, Adam=1E-3)
+lr_final: 0.1           # final OneCycleLR learning rate (lr0 * lr_final)
+momentum: 0.9           # SGD momentum/Adam beta1
+weight_decay: 0.0001    # optimizer weight decay 1e-4
+
+# Loss Gain
+score_gain: 1.0   # score loss gain
+gender_gain: 0.5  # gender loss gain
+age_gain: 0.01    # age loss gain
+land_gain: 10.0   # land loss gain
+glass_gain: 2.0   # glass loss gain
+smile_gain: 0.5   # smile loss gain
+hat_gain: 2.0     # hat loss gain
+mask_gain: 1.0    # mask loss gain
+
+# Augmentation
+hsv_h: 0.01       # image HSV-Hue augmentation
+hsv_s: 0.5        # image HSV-Saturation augmentation
+hsv_v: 0.3        # image HSV-Value augmentation
+degrees: 25.0     # image rotation (+/- deg)
+translate: 0.15   # image translation (+/-)
+scale: 0.1        # image scale (+/- gain) we change to random.uniform(1, 1 + scale * 3) to get crop
+shear: 2.0        # image shear (+/- deg)
+perspective: 0.0  # image perspective (+/-), range 0-0.001
+flipud: 0.0       # image flip up-down (probability not use)
+fliplr: 0.5       # image flip left-right (probability)
